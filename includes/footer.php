@@ -10,7 +10,9 @@
                 <ul>
                     <?php
                     // Determine base path dynamically (same logic as header)
-                    $base_path = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(dirname(__FILE__)));
+                    $script_path = str_replace('\\', '/', dirname(dirname(__FILE__)));
+                    $document_root = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+                    $base_path = str_replace($document_root, '', $script_path);
                     ?>
                     <li><a href="<?php echo $base_path; ?>/index.php">Home</a></li>
                     <?php if(isset($_SESSION['user_id'])): ?>

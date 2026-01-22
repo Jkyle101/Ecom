@@ -4,7 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Determine base path dynamically
-$base_path = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(dirname(__FILE__)));
+$script_path = str_replace('\\', '/', dirname(dirname(__FILE__)));
+$document_root = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+$base_path = str_replace($document_root, '', $script_path);
 
 // Get relative path for includes
 $include_path = dirname(__DIR__);
