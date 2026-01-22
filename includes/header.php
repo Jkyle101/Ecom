@@ -3,12 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Determine base path
-$base_path = '';
-$current_dir = dirname($_SERVER['PHP_SELF']);
-if (strpos($current_dir, '/Ecom') !== false) {
-    $base_path = '/Ecom';
-}
+// Determine base path dynamically
+$base_path = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(dirname(__FILE__)));
 
 // Get relative path for includes
 $include_path = dirname(__DIR__);
@@ -67,4 +63,3 @@ require_once $include_path . '/includes/cart.php';
         </nav>
     </header>
     <main>
-

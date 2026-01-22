@@ -9,12 +9,8 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <?php
-                    // Determine base path (same logic as header)
-                    $base_path = '';
-                    $current_dir = dirname($_SERVER['PHP_SELF']);
-                    if (strpos($current_dir, '/Ecom') !== false) {
-                        $base_path = '/Ecom';
-                    }
+                    // Determine base path dynamically (same logic as header)
+                    $base_path = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(dirname(__FILE__)));
                     ?>
                     <li><a href="<?php echo $base_path; ?>/index.php">Home</a></li>
                     <?php if(isset($_SESSION['user_id'])): ?>
@@ -40,4 +36,3 @@
     <script src="<?php echo $base_path; ?>/assets/js/main.js"></script>
 </body>
 </html>
-
