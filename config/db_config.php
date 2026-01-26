@@ -50,21 +50,6 @@ $sql = "CREATE TABLE IF NOT EXISTS notifications (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 )";
-
-if ($conn->query($sql) !== TRUE) {
-    // Try without foreign key if products table doesn't exist yet
-    $sql = "CREATE TABLE IF NOT EXISTS notifications (
-        id INT(11) AUTO_INCREMENT PRIMARY KEY,
-        user_id INT(11) NOT NULL,
-        product_id INT(11) DEFAULT NULL,
-        message TEXT NOT NULL,
-        type VARCHAR(50) DEFAULT 'general',
-        is_read TINYINT(1) DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )";
-    $conn->query($sql);
-}
-
 // Create products table
 $sql = "CREATE TABLE IF NOT EXISTS products (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -81,6 +66,21 @@ $sql = "CREATE TABLE IF NOT EXISTS products (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (seller_id) REFERENCES users(id) ON DELETE CASCADE
 )";
+if ($conn->query($sql) !== TRUE) {
+    // Try without foreign key if products table doesn't exist yet
+    $sql = "CREATE TABLE IF NOT EXISTS notifications (
+        id INT(11) AUTO_INCREMENT PRIMARY KEY,
+        user_id INT(11) NOT NULL,
+        product_id INT(11) DEFAULT NULL,
+        message TEXT NOT NULL,
+        type VARCHAR(50) DEFAULT 'general',
+        is_read TINYINT(1) DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    $conn->query($sql);
+}
+
+
 
 if ($conn->query($sql) !== TRUE) {
     die("Error creating products table: " . $conn->error);
