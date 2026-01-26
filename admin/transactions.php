@@ -50,6 +50,7 @@ $orders = $stmt->get_result();
         </div>
         
         <div class="content-card">
+            <div class="table-responsive">
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr style="border-bottom: 2px solid #ddd;">
@@ -86,6 +87,7 @@ $orders = $stmt->get_result();
                     <?php endif; ?>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </main>

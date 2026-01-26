@@ -29,8 +29,10 @@ require_once $include_path . '/includes/cart.php';
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">
-                <a href="<?php echo $base_path; ?>/index.php">E-Commerce Platform</a>
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="<?php echo $base_path; ?>/buyer/dashboard.php">E-Commerce Platform</a>
+                </div>
             </div>
             <ul class="nav-links">
                 <?php if(isset($_SESSION['user_id'])): ?>
@@ -64,4 +66,175 @@ require_once $include_path . '/includes/cart.php';
             </ul>
         </nav>
     </header>
+    <nav class="mobile-bottom-nav">
+        <ul>
+            <?php if(isset($_SESSION['user_id'])): ?>
+                <?php if($_SESSION['role'] == 'admin'): ?>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/dashboard.php">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/admin/products.php">
+                            <i class="fas fa-th-large"></i>
+                            <span>Listings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/admin/transactions.php">
+                            <i class="fas fa-receipt"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/admin/account.php">
+                            <i class="fas fa-user"></i>
+                            <span>Account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/auth/logout.php">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                <?php elseif($_SESSION['role'] == 'seller'): ?>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/dashboard.php">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/seller/products.php">
+                            <i class="fas fa-box"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/seller/orders.php">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/seller/account.php">
+                            <i class="fas fa-user"></i>
+                            <span>Account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/auth/logout.php">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/messages.php">
+                            <i class="fas fa-envelope"></i>
+                            <span>Messages</span>
+                            <?php echo displayMessageBadge($_SESSION['user_id']); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/notifications.php">
+                            <i class="fas fa-bell"></i>
+                            <?php if(isset($_SESSION['user_id']) && function_exists('countUnreadNotifications')): ?>
+                                <?php $unread_notif = countUnreadNotifications($_SESSION['user_id']); ?>
+                                <?php if($unread_notif > 0): ?>
+                                    <span class="notification-badge"><?php echo $unread_notif; ?></span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/cart.php">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="message-badge"><?php echo getCartCount($_SESSION['user_id']); ?></span>
+                            <span>Cart</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/auth/logout.php">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/dashboard.php">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/products.php">
+                            <i class="fas fa-search"></i>
+                            <span>Search</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/cart.php">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="message-badge"><?php echo getCartCount($_SESSION['user_id']); ?></span>
+                            <span>Cart</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/messages.php">
+                            <i class="fas fa-envelope"></i>
+                            <span>Messages</span>
+                            <?php echo displayMessageBadge($_SESSION['user_id']); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/notifications.php">
+                            <i class="fas fa-bell"></i>
+                            <?php if(isset($_SESSION['user_id']) && function_exists('countUnreadNotifications')): ?>
+                                <?php $unread_notif = countUnreadNotifications($_SESSION['user_id']); ?>
+                                <?php if($unread_notif > 0): ?>
+                                    <span class="notification-badge"><?php echo $unread_notif; ?></span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/buyer/account.php">
+                            <i class="fas fa-user"></i>
+                            <span>Account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_path; ?>/auth/logout.php">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php else: ?>
+                <li>
+                    <a href="<?php echo $base_path; ?>/index.php">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $base_path; ?>/auth/login.php">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $base_path; ?>/auth/register.php">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
     <main>

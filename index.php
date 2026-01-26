@@ -67,7 +67,7 @@ if (isset($_SESSION['user_id'])) {
 <div class="parallax" style="background-image: url('assets/images/GATE.jpg'); background-color: #71c9ce;">
     <div class="overlay" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; background: rgba(0,0,0,0.4);">
         <h1 style="font-size: 3rem; margin-bottom: 20px;">Welcome to Student E-Commerce Platform</h1>
-        <p style="font-size: 1.2rem; margin-bottom: 30px;">A platform exclusively for school students to buy and sell products/p>
+        <p style="font-size: 1.2rem; margin-bottom: 30px;">A platform exclusively for school students to buy and sell products</p>
         
         <div class="auth-buttons">
             <a href="auth/login.php" class="btn-primary">Login</a>
