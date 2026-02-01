@@ -83,7 +83,12 @@ $order_items = $conn->query("SELECT oi.*, p.name, p.image_path, u.username as se
         </div>
         
         <div class="content-card">
-            <a href="orders.php" class="btn btn-secondary">← Back to Orders</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <a href="orders.php" class="btn btn-secondary">← Back to Orders</a>
+                <a href="download_receipt.php?order_id=<?php echo $order['id']; ?>" class="btn btn-success" target="_blank">
+                    <i class="fas fa-download"></i> Download/Print Receipt
+                </a>
+            </div>
 
             <?php if (!empty($success)): ?>
                 <div class="alert alert-success" style="margin-top: 15px;"><?php echo $success; ?></div>

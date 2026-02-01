@@ -53,6 +53,9 @@ if (!$order) {
             </div>
             
             <div style="margin-top: 30px;">
+                <a href="download_receipt.php?order_id=<?php echo $order['id']; ?>" class="btn btn-success" target="_blank">
+                    <i class="fas fa-download"></i> Download/Print Receipt
+                </a>
                 <a href="orders.php" class="btn btn-primary">View My Orders</a>
                 <a href="products.php" class="btn btn-secondary">Continue Shopping</a>
             </div>

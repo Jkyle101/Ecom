@@ -136,6 +136,16 @@ $recent_deletions = $conn->query("SELECT dr.*, p.name as product_name, u.usernam
                     </div>
                 </a>
                 
+                <a href="categories.php" class="quick-action-card" style="text-decoration: none; color: inherit;">
+                    <div class="action-icon" style="background: #9b59b6; color: white;">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div>
+                        <h3>Manage Categories</h3>
+                        <p>Add, edit, and manage product categories</p>
+                    </div>
+                </a>
+
                 <a href="system_maintenance.php" class="quick-action-card" style="text-decoration: none; color: inherit;">
                     <div class="action-icon" style="background: #ff6b6b; color: white;">
                         <i class="fas fa-cog"></i>
@@ -145,7 +155,7 @@ $recent_deletions = $conn->query("SELECT dr.*, p.name as product_name, u.usernam
                         <p>System settings and maintenance tools</p>
                     </div>
                 </a>
-                
+
                 <a href="account.php" class="quick-action-card" style="text-decoration: none; color: inherit;">
                     <div class="action-icon" style="background: #4ecdc4; color: white;">
                         <i class="fas fa-user-cog"></i>

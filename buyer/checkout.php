@@ -21,12 +21,16 @@ $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
 // Check if all sellers have GCash numbers set up
-$sellers_gcash_status = $conn->query("
+$sellers_gcash_status = $conn->prepare("
     SELECT DISTINCT u.username as seller_name, u.gcash_number
     FROM cart c
-    JOIN users u ON c.seller_id = u.id
-    WHERE c.user_id = $user_id
+    JOIN products p ON c.product_id = p.id
+    JOIN users u ON p.seller_id = u.id
+    WHERE c.user_id = ?
 ");
+$sellers_gcash_status->bind_param("i", $user_id);
+$sellers_gcash_status->execute();
+$sellers_gcash_status = $sellers_gcash_status->get_result();
 $gcash_available = true;
 $sellers_without_gcash = [];
 
