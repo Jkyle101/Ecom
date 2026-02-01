@@ -116,15 +116,15 @@ function generateReceipt($order_id, $user_id) {
                 <tr>
                     <td>' . $product_name . '</td>
                     <td style="text-align: center;">' . $item['quantity'] . '</td>
-                    <td style="text-align: right;">₱' . number_format($item['price'], 2) . '</td>
-                    <td style="text-align: right;">₱' . number_format($item['price'] * $item['quantity'], 2) . '</td>
+                    <td style="text-align: right;">&#8369;' . number_format($item['price'], 2) . '</td>
+                    <td style="text-align: right;">&#8369;' . number_format($item['price'] * $item['quantity'], 2) . '</td>
                 </tr>';
     }
 
     $html .= '
                 <tr class="total-row">
                     <td colspan="3" style="text-align: right;">Total Amount:</td>
-                    <td>₱' . number_format($order['total_amount'], 2) . '</td>
+                    <td>&#8369;' . number_format($order['total_amount'], 2) . '</td>
                 </tr>
             </tbody>
         </table>
