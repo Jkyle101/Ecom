@@ -38,6 +38,7 @@ function generateReceipt($order_id, $user_id) {
 <html>
 <head>
     <title>Ecom Shop - Receipt #' . $order['id'] . '</title>
+    ' . (!empty($logo_data) ? '<link rel="icon" type="image/png" href="data:image/png;base64,' . $logo_data . '">' : '') . '
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px; }

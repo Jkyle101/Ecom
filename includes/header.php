@@ -23,6 +23,13 @@ require_once $include_path . '/includes/cart.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student E-Commerce Platform</title>
+    <?php
+    $logo_path = $include_path . '/assets/images/logo.png';
+    if (file_exists($logo_path)) {
+        $logo_data = base64_encode(file_get_contents($logo_path));
+        echo '<link rel="icon" type="image/png" href="data:image/png;base64,' . $logo_data . '">';
+    }
+    ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="<?php echo $base_path; ?>/assets/css/style.css">
 </head>
