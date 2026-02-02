@@ -20,6 +20,10 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
+// Get buildings
+$buildings_query = $conn->query("SELECT * FROM buildings ORDER BY name");
+$buildings = $buildings_query->fetch_all(MYSQLI_ASSOC);
+
 // Check if all sellers have GCash numbers set up
 $sellers_gcash_status = $conn->prepare("
     SELECT DISTINCT u.username as seller_name, u.gcash_number
@@ -47,22 +51,23 @@ $success = '';
 // Handle checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     check_csrf_token();
-    
+
     $payment_method = sanitize_input($_POST['payment_method']);
-    $shipping_address = sanitize_input($_POST['shipping_address']);
-    
-    if (empty($payment_method) || empty($shipping_address)) {
+    $building_id = sanitize_input($_POST['building_id']);
+    $room_id = sanitize_input($_POST['room_id']);
+
+    if (empty($payment_method) || empty($building_id) || empty($room_id)) {
         $error = "Please fill all required fields";
     } elseif ($payment_method === 'Gcash' && !$gcash_available) {
         $error = "GCash payment is not available because some sellers haven't set up their GCash accounts yet.";
     } else {
         // Start transaction
         $conn->begin_transaction();
-        
+
         try {
             // Create order
-            $stmt = $conn->prepare("INSERT INTO orders (user_id, total_amount, payment_method, shipping_address) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("idss", $user_id, $cart_total, $payment_method, $shipping_address);
+            $stmt = $conn->prepare("INSERT INTO orders (user_id, total_amount, payment_method, building_id, room_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("idsii", $user_id, $cart_total, $payment_method, $building_id, $room_id);
             $stmt->execute();
             $order_id = $stmt->insert_id;
             
@@ -131,9 +136,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     
                     <div class="form-group">
-                        <label>Shipping Address *</label>
-                        <textarea name="shipping_address" class="form-control" rows="4" required 
-                                  placeholder="Enter your complete shipping address"><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
+                        <label>Building *</label>
+                        <select name="building_id" id="building_id" class="form-control" required>
+                            <option value="">Select Building</option>
+                            <?php foreach ($buildings as $building): ?>
+                                <option value="<?php echo $building['id']; ?>"><?php echo htmlspecialchars($building['name']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Room *</label>
+                        <select name="room_id" id="room_id" class="form-control" required>
+                            <option value="">Select Room</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
@@ -202,3 +218,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </main>
 
 <?php include '../includes/footer.php'; ?>
+
+<script>
+document.getElementById('building_id').addEventListener('change', function() {
+    const buildingId = this.value;
+    const roomSelect = document.getElementById('room_id');
+
+    // Clear existing options
+    roomSelect.innerHTML = '<option value="">Select Room</option>';
+
+    if (buildingId) {
+        // Fetch rooms for the selected building
+        fetch(`../get_rooms.php?building_id=${buildingId}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(room => {
+                    const option = document.createElement('option');
+                    option.value = room.id;
+                    option.textContent = room.name;
+                    roomSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching rooms:', error);
+            });
+    }
+});
+</script>

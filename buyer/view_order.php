@@ -7,8 +7,14 @@ require_login();
 $order_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $user_id = $_SESSION['user_id'];
 
-// Get order details
-$stmt = $conn->prepare("SELECT * FROM orders WHERE id = ? AND user_id = ?");
+// Get order details with building and room info
+$stmt = $conn->prepare("
+    SELECT o.*, b.name as building_name, r.name as room_name
+    FROM orders o
+    LEFT JOIN buildings b ON o.building_id = b.id
+    LEFT JOIN rooms r ON o.room_id = r.id
+    WHERE o.id = ? AND o.user_id = ?
+");
 $stmt->bind_param("ii", $order_id, $user_id);
 $stmt->execute();
 $order = $stmt->get_result()->fetch_assoc();
@@ -152,8 +158,9 @@ $order_items = $conn->query("SELECT oi.*, p.name, p.image_path, u.username as se
                 </div>
                 
                 <div style="margin-bottom: 30px;">
-                    <h3>Shipping Address</h3>
-                    <p><?php echo nl2br(htmlspecialchars($order['shipping_address'])); ?></p>
+                    <h3>Delivery Location</h3>
+                    <p><strong>Building:</strong> <?php echo htmlspecialchars($order['building_name'] ?? 'N/A'); ?></p>
+                    <p><strong>Room:</strong> <?php echo htmlspecialchars($order['room_name'] ?? 'N/A'); ?></p>
                 </div>
                 
                 <h3>Order Items</h3>

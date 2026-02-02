@@ -297,6 +297,47 @@ if ($conn->query($sql) !== TRUE) {
     die("Error creating product_deletion_requests table: " . $conn->error);
 }
 
+// Create buildings table
+$sql = "CREATE TABLE IF NOT EXISTS buildings (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+if ($conn->query($sql) !== TRUE) {
+    die("Error creating buildings table: " . $conn->error);
+}
+
+// Create rooms table
+$sql = "CREATE TABLE IF NOT EXISTS rooms (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    building_id INT(11) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (building_id) REFERENCES buildings(id) ON DELETE CASCADE
+)";
+
+if ($conn->query($sql) !== TRUE) {
+    die("Error creating rooms table: " . $conn->error);
+}
+
+// Insert default buildings
+$buildings = ["HTM Building", "EDUC", "COT", "CAS", "Multi-purpose Building", "Admin", "Canteen", "School Gate 1", "School Gate 2"];
+foreach ($buildings as $building) {
+    $stmt = $conn->prepare("INSERT IGNORE INTO buildings (name) VALUES (?)");
+    $stmt->bind_param("s", $building);
+    $stmt->execute();
+    $stmt->close();
+}
+
+// Add building_id and room_id columns to orders table if not exists
+$sql = "SHOW COLUMNS FROM orders LIKE 'building_id'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    $sql = "ALTER TABLE orders ADD COLUMN building_id INT(11) NULL AFTER payment_method, ADD COLUMN room_id INT(11) NULL AFTER building_id";
+    $conn->query($sql);
+}
+
 // Insert admin user if not exists
 $admin_username = "admin";
 $admin_password = password_hash("admin124", PASSWORD_DEFAULT);

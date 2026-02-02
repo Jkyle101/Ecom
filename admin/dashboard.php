@@ -146,6 +146,16 @@ $recent_deletions = $conn->query("SELECT dr.*, p.name as product_name, u.usernam
                     </div>
                 </a>
 
+                <a href="locations.php" class="quick-action-card" style="text-decoration: none; color: inherit;">
+                    <div class="action-icon" style="background: #3498db; color: white;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h3>Manage Locations</h3>
+                        <p>Add, edit buildings and rooms for delivery</p>
+                    </div>
+                </a>
+
                 <a href="system_maintenance.php" class="quick-action-card" style="text-decoration: none; color: inherit;">
                     <div class="action-icon" style="background: #ff6b6b; color: white;">
                         <i class="fas fa-cog"></i>

@@ -6,10 +6,12 @@ require_role('admin');
 
 $order_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// Get order details
-$stmt = $conn->prepare("SELECT o.*, u.username as buyer_name 
+// Get order details with building and room info
+$stmt = $conn->prepare("SELECT o.*, u.username as buyer_name, b.name as building_name, r.name as room_name
                         FROM orders o
                         JOIN users u ON o.user_id = u.id
+                        LEFT JOIN buildings b ON o.building_id = b.id
+                        LEFT JOIN rooms r ON o.room_id = r.id
                         WHERE o.id = ?");
 $stmt->bind_param("i", $order_id);
 $stmt->execute();
@@ -65,8 +67,9 @@ $order_items = $conn->query("SELECT oi.*, p.name, p.image_path, u.username as se
                 </div>
                 
                 <div style="margin-bottom: 30px;">
-                    <h3>Shipping Address</h3>
-                    <p><?php echo nl2br(htmlspecialchars($order['shipping_address'])); ?></p>
+                    <h3>Delivery Location</h3>
+                    <p><strong>Building:</strong> <?php echo htmlspecialchars($order['building_name'] ?? 'N/A'); ?></p>
+                    <p><strong>Room:</strong> <?php echo htmlspecialchars($order['room_name'] ?? 'N/A'); ?></p>
                 </div>
                 
                 <h3>Order Items</h3>

@@ -112,8 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_tracking'])) {
 
 // Get order details - verify seller owns at least one item in this order
 $stmt = $conn->prepare("
-    SELECT o.* FROM orders o
+    SELECT o.*, b.name as building_name, r.name as room_name FROM orders o
     JOIN order_items oi ON o.id = oi.order_id
+    LEFT JOIN buildings b ON o.building_id = b.id
+    LEFT JOIN rooms r ON o.room_id = r.id
     WHERE o.id = ? AND oi.seller_id = ?
     LIMIT 1
 ");
@@ -270,8 +272,9 @@ $user = $conn->query("SELECT gcash_number FROM users WHERE id = $seller_id")->fe
                 </div>
 
                 <div style="margin-bottom: 30px;">
-                    <h3>Shipping Address</h3>
-                    <p><?php echo nl2br(htmlspecialchars($order['shipping_address'])); ?></p>
+                    <h3>Delivery Location</h3>
+                    <p><strong>Building:</strong> <?php echo htmlspecialchars($order['building_name'] ?? 'N/A'); ?></p>
+                    <p><strong>Room:</strong> <?php echo htmlspecialchars($order['room_name'] ?? 'N/A'); ?></p>
                 </div>
 
                 <h3>Your Products in This Order</h3>

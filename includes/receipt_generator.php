@@ -2,8 +2,14 @@
 function generateReceipt($order_id, $user_id) {
     global $conn;
 
-    // Get order details
-    $stmt = $conn->prepare("SELECT * FROM orders WHERE id = ? AND user_id = ?");
+    // Get order details with building and room info
+    $stmt = $conn->prepare("
+        SELECT o.*, b.name as building_name, r.name as room_name
+        FROM orders o
+        LEFT JOIN buildings b ON o.building_id = b.id
+        LEFT JOIN rooms r ON o.room_id = r.id
+        WHERE o.id = ? AND o.user_id = ?
+    ");
     $stmt->bind_param("ii", $order_id, $user_id);
     $stmt->execute();
     $order = $stmt->get_result()->fetch_assoc();
@@ -90,8 +96,11 @@ function generateReceipt($order_id, $user_id) {
     </div>
 
     <div class="section">
-        <h3>Shipping Address</h3>
-        <p>' . nl2br(htmlspecialchars($order['shipping_address'])) . '</p>
+        <h3>Delivery Location</h3>
+        <table class="info-table">
+            <tr><td>Building:</td><td>' . htmlspecialchars($order['building_name'] ?? 'N/A') . '</td></tr>
+            <tr><td>Room:</td><td>' . htmlspecialchars($order['room_name'] ?? 'N/A') . '</td></tr>
+        </table>
     </div>
 
     <div class="section">
