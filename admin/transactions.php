@@ -69,7 +69,7 @@ $orders = $stmt->get_result();
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 12px;">#<?php echo $order['id']; ?></td>
                                 <td style="padding: 12px;"><?php echo htmlspecialchars($order['buyer_name']); ?></td>
-                                <td style="padding: 12px;" class="product-price">$<?php echo number_format($order['total_amount'], 2); ?></td>
+<td style="padding: 12px;" class="product-price">₱<?php echo number_format($order['total_amount'], 2); ?></td>
                                 <td style="padding: 12px;"><?php echo htmlspecialchars($order['payment_method']); ?></td>
                                 <td style="padding: 12px;">
                                     <span class="product-category"><?php echo ucfirst($order['status']); ?></span>

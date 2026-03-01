@@ -37,7 +37,9 @@ require_once $include_path . '/includes/cart.php';
     <header>
         <nav class="navbar">
             <div class="nav-left">
+            <img src="data:image/png;base64,<?php echo $logo_data; ?>" alt="Logo" style="width: 50px; height: 50px;">
                 <div class="logo">
+                     
                     <a href="<?php echo $base_path; ?>/buyer/dashboard.php">E-Commerce Platform</a>
                 </div>
             </div>

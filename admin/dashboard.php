@@ -126,6 +126,16 @@ $recent_deletions = $conn->query("SELECT dr.*, p.name as product_name, u.usernam
                     </div>
                 </a>
                 
+                <a href="sales.php" class="quick-action-card" style="text-decoration: none; color: inherit;">
+                    <div class="action-icon" style="background: #2ecc71; color: white;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h3>Sales Tracking</h3>
+                        <p>Track seller sales history and total sales</p>
+                    </div>
+                </a>
+                
                 <a href="view_feedback.php" class="quick-action-card" style="text-decoration: none; color: inherit;">
                     <div class="action-icon purple">
                         <i class="fas fa-comments"></i>

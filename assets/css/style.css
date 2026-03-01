@@ -1,6 +1,8 @@
+
 /* Global Styles */
 
 /* Notification Styles */
+
 .notification-badge {
     display: inline-block;
     background-color: #ff4757;
@@ -166,6 +168,10 @@ header {
     padding: 15px 5%;
 }
 
+.logo img {
+        
+}
+
 .logo a {
     font-size: 24px;
     font-weight: bold;
@@ -178,6 +184,9 @@ header {
     color: var(--secondary-blue);
 }
 
+.logo img {
+    vertical-align: middle;
+}
 .nav-links {
     display: flex;
     list-style: none;
@@ -1011,6 +1020,41 @@ footer {
     transform: translateY(0);
 }
 
+/* Logo Styles - Larger in header */
+.logo-image {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+/* Header navbar logo styling */
+.navbar .logo-image {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Login page logo styling */
+.login-logo {
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-logo img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
 /* Additional responsive styles */
 .product-detail-grid {
     display: grid;
@@ -1106,3 +1150,4 @@ footer {
     }
 }
 
+ 

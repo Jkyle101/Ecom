@@ -92,12 +92,15 @@ $unread_notifications = $stmt->get_result()->fetch_assoc()['unread_notifications
             <a href="products.php" class="btn btn-secondary">
                 <i class="fas fa-list"></i> View All Products
             </a>
+            <a href="sales.php" class="btn btn-secondary">
+                <i class="fas fa-chart-line"></i> My Sales
+            </a>
             <a href="transactions.php" class="btn btn-secondary">
-                <i class="fas fa-chart-line"></i> Monitor Transactions
+                <i class="fas fa-receipt"></i> Monitor Transactions
             </a>
             <a href="orders.php" class="btn btn-secondary">
                 <i class="fas fa-shopping-cart"></i> My Orders
-            </a>
+            </a>    
             <a href="messages.php" class="btn btn-secondary">
                 <i class="fas fa-envelope"></i> Messages
                 <?php if ($unread_count > 0): ?>

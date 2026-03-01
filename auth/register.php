@@ -30,8 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Passwords do not match";
     } elseif (strlen($password) < 8) {
         $error = "Password must be at least 8 characters long";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Please enter a valid email address";
+    } elseif (!preg_match('/@llcc\.edu\.ph$/i', $email)) {
+        $error = "Please use a valid @llcc.edu.ph email address";
     } else {
         // Check if username already exists
         $sql = "SELECT id FROM users WHERE username = ?";
@@ -98,8 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <label>Email (LLCC Email only)</label>
+                <input type="email" name="email" class="form-control" placeholder="user@llcc.edu.ph" required>
             </div>
             
             <div class="form-group">

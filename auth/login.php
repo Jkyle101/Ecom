@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($username) || empty($password)) {
         $error = "Please fill all fields";
+    } elseif (!preg_match('/@llcc\.edu\.ph$/i', $username)) {
+        $error = "Please use your @llcc.edu.ph email address to login";
     } else {
         $sql = "SELECT id, username, password, role FROM users WHERE username = ? OR email = ?";
         
@@ -70,8 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include '../includes/header.php'; ?>
 
 <div class="container">
+    
     <div class="form-container">
-        <h2>Login</h2>
+        <div class="login-logo">
         <?php if (!empty($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
